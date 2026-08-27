@@ -4,9 +4,10 @@
 @{
     ViewData["Title"] = "Register - Edin Store";
     Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["BodyClass"] = "auth-page";
 }
 
-<section class="py-5 auth-page">
+<section class="auth-section">
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-lg-7 col-xl-6">
@@ -25,7 +26,7 @@
                                 <label asp-for="Input.Email" class="form-label fw-bold text-dark">Email</label>
                                 <div class="input-group input-group-lg">
                                     <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                    <input asp-for="Input.Email" class="form-control border-1" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                                 </div>
                                 <span asp-validation-for="Input.Email" class="text-danger small"></span>
                             </div>
@@ -34,7 +35,7 @@
                                 <label asp-for="Input.Password" class="form-label fw-bold text-dark">Password</label>
                                 <div class="input-group input-group-lg">
                                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                    <input asp-for="Input.Password" class="form-control border-1" autocomplete="new-password" aria-required="true" placeholder="Create a password" />
+                                    <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Create a password" />
                                 </div>
                                 <span asp-validation-for="Input.Password" class="text-danger small"></span>
                             </div>
@@ -43,7 +44,7 @@
                                 <label asp-for="Input.ConfirmPassword" class="form-label fw-bold text-dark">Confirm Password</label>
                                 <div class="input-group input-group-lg">
                                     <span class="input-group-text"><i class="bi bi-shield-check"></i></span>
-                                    <input asp-for="Input.ConfirmPassword" class="form-control border-1" autocomplete="new-password" aria-required="true" placeholder="Confirm your password" />
+                                    <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Confirm your password" />
                                 </div>
                                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span>
                             </div>
@@ -69,3 +70,7 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

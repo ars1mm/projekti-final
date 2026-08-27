@@ -1,0 +1,88 @@
+@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "My Account - Edin Store";
+    Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["BodyClass"] = "auth-page";
+}
+
+<section class="auth-section">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="mb-5">
+                    <h1 class="h2 mb-2">My Account</h1>
+                    <p class="text-muted">Manage your profile and account settings</p>
+                    <hr class="divider" />
+                </div>
+
+                @if (TempData["StatusMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                        @TempData["StatusMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                <div class="card shadow-lg border-0 rounded mb-4">
+                    <div class="card-body p-5">
+                        <h5 class="fw-bold mb-4 text-dark">
+                            <i class="bi bi-person-circle me-2"></i>Profile Information
+                        </h5>
+                        <form id="profile-form" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger small mb-4" role="alert"></div>
+
+                            <div class="mb-4">
+                                <label asp-for="Input.PhoneNumber" class="form-label fw-bold text-dark">Phone Number</label>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                                    <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Enter phone number" />
+                                </div>
+                                <span asp-validation-for="Input.PhoneNumber" class="text-danger small"></span>
+                            </div>
+
+                            <div class="d-grid gap-2 d-sm-flex justify-content-sm-end pt-3 border-top">
+                                <button id="update-profile-button" type="submit" class="btn btn-primary btn-lg px-5">
+                                    <i class="bi bi-check-circle me-2"></i>Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card shadow-lg border-0 rounded mb-4">
+                    <div class="card-body p-5">
+                        <h5 class="fw-bold mb-4 text-dark">
+                            <i class="bi bi-shield-lock me-2"></i>Account Details
+                        </h5>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-dark">Email</label>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                <input type="text" class="form-control" value="@Model.Username" disabled />
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 pt-3 border-top flex-wrap">
+                            <a asp-page="./TwoFactorAuthentication" class="btn btn-outline-secondary btn-lg px-4">
+                                <i class="bi bi-shield-check me-2"></i>Two-Factor Authentication
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <a asp-area="" asp-controller="Products" asp-action="Index" class="text-decoration-none text-primary">
+                        <i class="bi bi-arrow-left me-2"></i>Back to Product List
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

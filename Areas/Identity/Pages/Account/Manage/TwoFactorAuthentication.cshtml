@@ -1,0 +1,105 @@
+@page
+@model TwoFactorAuthenticationModel
+
+@{
+    ViewData["Title"] = "Two-Factor Authentication - Edin Store";
+    Layout = "/Views/Shared/_Layout.cshtml";
+    ViewData["BodyClass"] = "auth-page";
+}
+
+<section class="auth-section">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="mb-5">
+                    <h1 class="h2 mb-2">Two-Factor Authentication</h1>
+                    <p class="text-muted">Add additional security to your account</p>
+                    <hr class="divider" />
+                </div>
+
+                @if (TempData["StatusMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                        @TempData["StatusMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                <div class="card shadow-lg border-0 rounded mb-4">
+                    <div class="card-body p-5">
+                        <h5 class="fw-bold mb-4 text-dark">
+                            <i class="bi bi-shield-lock me-2"></i>2FA Status
+                        </h5>
+
+                        @if (Model.Is2faEnabled)
+                        {
+                            <div class="alert alert-success d-flex align-items-center mb-4">
+                                <i class="bi bi-check-circle-fill me-2"></i>
+                                Two-factor authentication is <strong class="ms-1">enabled</strong>.
+                            </div>
+
+                            @if (Model.RecoveryCodesLeft == 0)
+                            {
+                                <div class="alert alert-danger d-flex align-items-center mb-4">
+                                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                    You have no recovery codes left. Generate new ones below.
+                                </div>
+                            }
+                            else if (Model.RecoveryCodesLeft == 1)
+                            {
+                                <div class="alert alert-warning d-flex align-items-center mb-4">
+                                    <i class="bi bi-exclamation-triangle me-2"></i>
+                                    You have 1 recovery code left.
+                                </div>
+                            }
+                            else if (Model.RecoveryCodesLeft <= 3)
+                            {
+                                <div class="alert alert-warning d-flex align-items-center mb-4">
+                                    <i class="bi bi-exclamation-triangle me-2"></i>
+                                    You have @Model.RecoveryCodesLeft recovery codes left.
+                                </div>
+                            }
+
+                            <div class="d-flex gap-2 flex-wrap pt-3 border-top">
+                                @if (Model.IsMachineRemembered)
+                                {
+                                    <form method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-outline-secondary btn-lg px-4">
+                                            <i class="bi bi-pc-display me-2"></i>Forget this browser
+                                        </button>
+                                    </form>
+                                }
+                                <a asp-page="./Disable2fa" class="btn btn-outline-danger btn-lg px-4">
+                                    <i class="bi bi-shield-x me-2"></i>Disable 2FA
+                                </a>
+                                <a asp-page="./GenerateRecoveryCodes" class="btn btn-outline-secondary btn-lg px-4">
+                                    <i class="bi bi-key me-2"></i>Reset recovery codes
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning d-flex align-items-center mb-4">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                Two-factor authentication is <strong class="ms-1">disabled</strong>.
+                            </div>
+                            <div class="pt-3 border-top">
+                                <a asp-page="./EnableAuthenticator" class="btn btn-primary btn-lg px-5">
+                                    <i class="bi bi-shield-check me-2"></i>Enable 2FA
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <a asp-page="./Index" class="text-decoration-none text-primary">
+                        <i class="bi bi-arrow-left me-2"></i>Back to Account
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

@@ -2846,18 +2846,18 @@ textarea.form-control-lg {
 
 .btn-primary {
     --bs-btn-color: #fff;
-    --bs-btn-bg: #6c757d;
-    --bs-btn-border-color: #6c757d;
+    --bs-btn-bg: #f4623a;
+    --bs-btn-border-color: #f4623a;
     --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #5c636a;
-    --bs-btn-hover-border-color: #565e64;
-    --bs-btn-focus-shadow-rgb: 130, 138, 145;
+    --bs-btn-hover-bg: #dc5834;
+    --bs-btn-hover-border-color: #c34e2e;
+    --bs-btn-focus-shadow-rgb: 244, 98, 58;
     --bs-btn-active-color: #fff;
-    --bs-btn-active-bg: #565e64;
-    --bs-btn-active-border-color: #51585e;
+    --bs-btn-active-bg: #c34e2e;
+    --bs-btn-active-border-color: #b84729;
     --bs-btn-disabled-color: #fff;
-    --bs-btn-disabled-bg: #6c757d;
-    --bs-btn-disabled-border-color: #6c757d;
+    --bs-btn-disabled-bg: #f4623a;
+    --bs-btn-disabled-border-color: #f4623a;
 }
 
 .btn-secondary {
@@ -11035,4 +11035,64 @@ header.masthead h1, header.masthead .h1 {
     background-color: #5c636a !important;
     border-color: #565e64 !important;
     color: #fff !important;
+}
+
+
+/* ===== Products Page ===== */
+#products {
+    background: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop') center/cover no-repeat;
+}
+.product-card {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: box-shadow 0.15s ease-in-out;
+}
+.product-card:hover { box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); }
+.product-title { color: #495057; font-weight: 600; }
+.product-price { color: #28a745; font-size: 1.25rem; font-weight: bold; }
+.product-description { color: #212529; font-weight: 500; }
+.page-section { padding: 5rem 0; }
+.divider-custom { height: 0.2rem; max-width: 3.25rem; background-color: #f4623a; margin: 1.5rem auto; }
+#products h1, #products p { color: white; }
+
+/* ===== Auth / Identity Pages ===== */
+/* Force navbar to show white/shrunk state on non-hero pages */
+body.auth-page #mainNav {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+}
+body.auth-page #mainNav .navbar-brand {
+    color: #212529;
+}
+body.auth-page #mainNav .navbar-brand:hover {
+    color: #f4623a;
+}
+body.auth-page #mainNav .navbar-nav .nav-item .nav-link {
+    color: #212529;
+}
+body.auth-page #mainNav .navbar-nav .nav-item .nav-link:hover {
+    color: #f4623a;
+}
+
+/* Auth page content spacing (clears fixed navbar) */
+.auth-section {
+    padding-top: 8rem;
+    padding-bottom: 5rem;
+    min-height: calc(100vh - 80px);
+}
+
+/* Input group icon styling */
+.auth-section .input-group-text {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+    color: #6c757d;
+}
+.auth-section .form-control:focus {
+    border-color: #f4623a;
+    box-shadow: 0 0 0 0.25rem rgba(244, 98, 58, 0.15);
+}
+.auth-section .card {
+    border-top: 3px solid #f4623a;
 }

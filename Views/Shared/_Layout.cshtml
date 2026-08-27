@@ -13,7 +13,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
     <link href="~/css/styles.css" rel="stylesheet" />
 </head>
-<body id="page-top">
+<body id="page-top" class="@(ViewData["BodyClass"] ?? "")">
     <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
         <div class="container px-4 px-lg-5">
             <a class="navbar-brand" href="@Url.Action("Index", "Home")">Edin Store</a>
