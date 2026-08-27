@@ -39,8 +39,12 @@ bld/
 
 # Database files
 *.db
+!products.db
 *.db-shm
 *.db-wal
+
+# ASP.NET local data protection keys
+DataProtectionKeys/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

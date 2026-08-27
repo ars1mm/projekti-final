@@ -1,0 +1,67 @@
+@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Login - Edin Store";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<section class="py-5 auth-page">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-7 col-xl-6">
+                <div class="mb-5">
+                    <h1 class="h2 mb-2">Login</h1>
+                    <p class="text-muted">Sign in to manage products and continue shopping</p>
+                    <hr class="divider" />
+                </div>
+
+                <div class="card shadow-lg border-0 rounded">
+                    <div class="card-body p-5">
+                        <form id="account" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger small mb-4" role="alert"></div>
+
+                            <div class="mb-4">
+                                <label asp-for="Input.Email" class="form-label fw-bold text-dark">Email</label>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                    <input asp-for="Input.Email" class="form-control border-1" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                                </div>
+                                <span asp-validation-for="Input.Email" class="text-danger small"></span>
+                            </div>
+
+                            <div class="mb-4">
+                                <label asp-for="Input.Password" class="form-label fw-bold text-dark">Password</label>
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                    <input asp-for="Input.Password" class="form-control border-1" autocomplete="current-password" aria-required="true" placeholder="Enter your password" />
+                                </div>
+                                <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                            </div>
+
+                            <div class="form-check mb-4">
+                                <input asp-for="Input.RememberMe" class="form-check-input" />
+                                <label asp-for="Input.RememberMe" class="form-check-label text-dark">Remember me</label>
+                            </div>
+
+                            <div class="d-grid gap-2 d-sm-flex justify-content-sm-end pt-3 border-top">
+                                <button id="login-submit" type="submit" class="btn btn-primary btn-lg px-5">
+                                    <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                                </button>
+                                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-outline-secondary btn-lg px-5">
+                                    <i class="bi bi-person-plus me-2"></i>Register
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <a asp-area="" asp-controller="Products" asp-action="Index" class="text-decoration-none text-primary">
+                        <i class="bi bi-arrow-left me-2"></i>Back to Product List
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,23 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Projekti_Final.Data;
 using Projekti_Final.Models;
-using Projekti_Final.Data;
-using Projekti_Final.Models;
 
-namespace MvcCoreCrudApp.Controllers.API
+namespace Projekti_Final.Controllers.API
 {
     [Route("api/products")]
     [ApiController]
     public class ProductsApiController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+
         public ProductsApiController(ApplicationDbContext context) => _context = context;
 
+        /// <summary>Returns all products (public).</summary>
         [HttpGet]
         public async Task<IEnumerable<Product>> Get() =>
             await _context.Products.ToListAsync();
 
+        /// <summary>Returns a single product by ID (public).</summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> Get(int id)
         {
@@ -26,7 +28,9 @@ namespace MvcCoreCrudApp.Controllers.API
             return product;
         }
 
+        /// <summary>Creates a new product (requires login).</summary>
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Product>> Post(Product product)
         {
             _context.Products.Add(product);
@@ -34,7 +38,9 @@ namespace MvcCoreCrudApp.Controllers.API
             return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
         }
 
+        /// <summary>Updates an existing product (requires login).</summary>
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> Put(int id, Product product)
         {
             if (id != product.Id) return BadRequest();
@@ -43,7 +49,9 @@ namespace MvcCoreCrudApp.Controllers.API
             return NoContent();
         }
 
+        /// <summary>Deletes a product by ID (requires login).</summary>
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var product = await _context.Products.FindAsync(id);

@@ -1,0 +1,100 @@
+@model List<Projekti_Final.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Shporta Ime";
+}
+
+<style>
+    .cart-section {
+        min-height: 80vh;
+        padding-top: 6rem;
+        padding-bottom: 3rem;
+    }
+    .cart-card {
+        background: rgba(255,255,255,0.97);
+        border-radius: 0.5rem;
+        box-shadow: 0 0.25rem 1rem rgba(0,0,0,0.1);
+    }
+    .quantity-badge {
+        font-size: 1rem;
+        min-width: 2rem;
+    }
+</style>
+
+<section class="cart-section">
+    <div class="container px-4 px-lg-5">
+        <h1 class="text-center mb-2">🛒 Shporta Ime</h1>
+        <hr class="divider" />
+
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success text-center">@TempData["Message"]</div>
+        }
+
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-cart-x fs-1 text-muted"></i>
+                <p class="lead mt-3 text-muted">Shporta juaj është bosh.</p>
+                <a asp-controller="Products" asp-action="Index" class="btn btn-primary btn-xl mt-2">Shiko Produktet</a>
+            </div>
+        }
+        else
+        {
+            <div class="cart-card p-4 mb-4">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Produkti</th>
+                            <th class="text-center">Çmimi</th>
+                            <th class="text-center">Sasia</th>
+                            <th class="text-center">Totali</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td><strong>@item.Name</strong></td>
+                                <td class="text-center">@item.Price.ToString("C")</td>
+                                <td class="text-center">
+                                    <span class="badge bg-secondary quantity-badge">@item.Quantity</span>
+                                </td>
+                                <td class="text-center text-success fw-bold">@item.Total.ToString("C")</td>
+                                <td class="text-end">
+                                    <form asp-action="Remove" asp-controller="Cart" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="productId" value="@item.ProductId" />
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i> Hiq
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr class="table-light">
+                            <td colspan="3" class="text-end fw-bold fs-5">Totali i Porosisë:</td>
+                            <td class="text-center fw-bold fs-5 text-success">@ViewBag.Total.ToString("C")</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <a asp-controller="Products" asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i> Vazhdo Blerjen
+                </a>
+                <form asp-action="Checkout" asp-controller="Cart" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-success btn-lg px-5">
+                        <i class="bi bi-bag-check"></i> Porosit Tani
+                    </button>
+                </form>
+            </div>
+        }
+    </div>
+</section>
