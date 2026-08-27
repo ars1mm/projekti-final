@@ -2,53 +2,55 @@
 
 @{
     ViewData["Title"] = "Delete Product - Edin Store";
+    ViewData["BodyClass"] = "auth-page";
 }
 
-<section class="py-5">
+<section class="auth-section">
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-lg-8">
-                
+
                 <div class="mb-5">
                     <h1 class="h2 mb-2">Delete Product</h1>
                     <p class="text-muted">Review product details before deletion</p>
                     <hr class="divider" />
                 </div>
 
-                
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <i class="bi bi-exclamation-triangle me-2"></i>
-                    <strong>Warning!</strong> Are you sure you want to delete this product? This action cannot be undone.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="alert alert-danger" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <strong>Warning!</strong> Are you sure you want to delete <strong>@Model.Name</strong>? This action cannot be undone.
                 </div>
 
-                
                 <div class="card shadow-lg border-0 rounded mb-4">
                     <div class="card-body p-5">
-                        
+
+                        @if (!string.IsNullOrEmpty(Model.ImagePath))
+                        {
+                            <div class="text-center mb-4">
+                                <img src="@Model.ImagePath" alt="@Model.Name" class="img-thumbnail product-image-preview" />
+                            </div>
+                        }
+
                         <div class="mb-4">
                             <label class="form-label fw-bold text-dark">Product Name</label>
-                            <input class="form-control form-control-lg border-1" value="@Model.Name" readonly />
+                            <input class="form-control form-control-lg" value="@Model.Name" readonly />
                         </div>
 
-                        
                         <div class="mb-4">
                             <label class="form-label fw-bold text-dark">Price</label>
                             <div class="input-group input-group-lg">
                                 <span class="input-group-text">$</span>
-                                <input class="form-control border-1" value="@Model.Price.ToString("F2")" readonly />
+                                <input class="form-control" value="@Model.Price.ToString("F2")" readonly />
                             </div>
                         </div>
 
-                        
                         <div class="mb-4">
                             <label class="form-label fw-bold text-dark">Description</label>
-                            <textarea class="form-control border-1" rows="5" readonly>@Model.Description</textarea>
+                            <textarea class="form-control" rows="4" readonly>@Model.Description</textarea>
                         </div>
                     </div>
                 </div>
 
-                
                 <form asp-action="Delete" method="post">
                     <input type="hidden" asp-for="Id" />
                     <div class="d-grid gap-2 d-sm-flex justify-content-sm-end">
@@ -61,7 +63,6 @@
                     </div>
                 </form>
 
-                
                 <div class="mt-4">
                     <a asp-action="Index" class="text-decoration-none text-primary">
                         <i class="bi bi-arrow-left me-2"></i>Back to Product List

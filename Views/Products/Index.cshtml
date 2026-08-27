@@ -9,45 +9,85 @@
         <h1 class="text-center mt-0">Our Products</h1>
         <hr class="divider-custom" />
         <p class="text-center mb-5">Discover our amazing collection of products. Each item is carefully selected for quality and style.</p>
-        <div class="text-center mb-4">
-            <a asp-action="Create" class="btn btn-primary btn-xl">+ Add New Product</a>
-            <a asp-controller="Cart" asp-action="Index" class="btn btn-success btn-xl ms-2">
-                <i class="bi bi-cart3"></i> Shporta
-            </a>
-        </div>
+
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <div class="text-center mb-4">
+                <a asp-action="Create" class="btn btn-primary btn-xl">
+                    <i class="bi bi-plus-circle me-2"></i>Add New Product
+                </a>
+            </div>
+        }
 
         @if (TempData["Message"] != null)
         {
-            <div class="alert alert-success text-center">@TempData["Message"]</div>
+            <div class="alert alert-success text-center alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle me-2"></i>@TempData["Message"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         }
 
-        <div class="row gx-4 gx-lg-5">
-            @foreach (var item in Model)
-            {
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100 product-card">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title product-title">@item.Name</h5>
-                            <h6 class="card-subtitle mb-2 product-price">@item.Price.ToString("C")</h6>
-                            <p class="card-text product-description flex-grow-1">@item.Description</p>
-                            <div class="mt-auto">
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info me-2">View</a>
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning me-2">Edit</a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger me-2">Delete</a>
-                                <form asp-controller="Cart" asp-action="Add" method="post" class="d-inline">
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="productId" value="@item.Id" />
-                                    <input type="hidden" name="returnUrl" value="/Products" />
-                                    <button type="submit" class="btn btn-success">
-                                        <i class="bi bi-cart-plus"></i> Shto
-                                    </button>
-                                </form>
+        @if (!Model.Any())
+        {
+            <div class="text-center py-5">
+                <i class="bi bi-box-seam fs-1 text-muted d-block mb-3"></i>
+                <p class="lead text-muted">No products available yet.</p>
+            </div>
+        }
+        else
+        {
+            <div class="row gx-4 gx-lg-5">
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100 product-card">
+
+                            <!-- Product image -->
+                            @if (!string.IsNullOrEmpty(item.ImagePath))
+                            {
+                                <img src="@item.ImagePath" alt="@item.Name" class="card-img-top product-card-img" />
+                            }
+                            else
+                            {
+                                <div class="product-card-img-placeholder d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
+                                </div>
+                            }
+
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title product-title">@item.Name</h5>
+                                <h6 class="card-subtitle mb-2 product-price">@item.Price.ToString("C")</h6>
+                                <p class="card-text product-description flex-grow-1">@item.Description</p>
+                                <div class="mt-auto pt-3 border-top">
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">
+                                            <i class="bi bi-eye me-1"></i>View
+                                        </a>
+                                        @if (User.Identity?.IsAuthenticated == true)
+                                        {
+                                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">
+                                                <i class="bi bi-pencil me-1"></i>Edit
+                                            </a>
+                                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">
+                                                <i class="bi bi-trash me-1"></i>Delete
+                                            </a>
+                                        }
+                                        <form asp-controller="Cart" asp-action="Add" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="productId" value="@item.Id" />
+                                            <input type="hidden" name="returnUrl" value="/Products" />
+                                            <button type="submit" class="btn btn-primary btn-sm">
+                                                <i class="bi bi-cart-plus me-1"></i>Add to Cart
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
-        </div>
+                }
+            </div>
+        }
     </div>
 </section>
 

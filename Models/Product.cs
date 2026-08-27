@@ -16,5 +16,8 @@ namespace Projekti_Final.Models
 
         [StringLength(500)]
         public string Description { get; set; }
+
+        /// <summary>Relative path to the uploaded image, e.g. /uploads/products/abc.jpg. Null if no image.</summary>
+        public string? ImagePath { get; set; }
     }
 }

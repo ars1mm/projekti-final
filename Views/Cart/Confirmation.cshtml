@@ -1,0 +1,132 @@
+@model Projekti_Final.Models.Order
+
+@{
+    ViewData["Title"] = "Order Confirmed - Edin Store";
+    ViewData["BodyClass"] = "auth-page";
+}
+
+<section class="auth-section">
+    <div class="container px-4 px-lg-5">
+
+        <!-- Progress indicator -->
+        <div class="d-flex align-items-center mb-5 checkout-steps">
+            <div class="checkout-step completed">
+                <span class="step-circle"><i class="bi bi-cart-check"></i></span>
+                <span class="step-label">Cart</span>
+            </div>
+            <div class="checkout-connector completed"></div>
+            <div class="checkout-step completed">
+                <span class="step-circle"><i class="bi bi-check-lg"></i></span>
+                <span class="step-label">Details</span>
+            </div>
+            <div class="checkout-connector completed"></div>
+            <div class="checkout-step active">
+                <span class="step-circle"><i class="bi bi-check-lg"></i></span>
+                <span class="step-label">Confirmation</span>
+            </div>
+        </div>
+
+        <!-- Success banner -->
+        <div class="text-center mb-5">
+            <div class="confirmation-icon mb-4">
+                <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+            </div>
+            <h1 class="h2 mb-2">Order Confirmed!</h1>
+            <p class="text-muted lead">Thank you, <strong>@Model.FirstName</strong>! Your order has been placed successfully.</p>
+            <p class="text-muted">A confirmation will be sent to <strong>@Model.Email</strong>.</p>
+        </div>
+
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8">
+
+                <!-- Order Details -->
+                <div class="card shadow-lg border-0 rounded mb-4">
+                    <div class="card-body p-5">
+                        <div class="d-flex justify-content-between align-items-start mb-4">
+                            <div>
+                                <h5 class="fw-bold text-dark mb-1">
+                                    <i class="bi bi-receipt me-2"></i>Order #@Model.Id
+                                </h5>
+                                <span class="text-muted small">Placed on @Model.PlacedAt.ToLocalTime().ToString("dddd, MMMM d, yyyy 'at' h:mm tt")</span>
+                            </div>
+                            <span class="badge bg-success fs-6 px-3 py-2">Confirmed</span>
+                        </div>
+
+                        <div class="table-responsive mb-4">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Product</th>
+                                        <th class="text-center">Unit Price</th>
+                                        <th class="text-center">Qty</th>
+                                        <th class="text-end">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Items)
+                                    {
+                                        <tr>
+                                            <td class="fw-semibold">@item.ProductName</td>
+                                            <td class="text-center text-muted">@item.UnitPrice.ToString("C")</td>
+                                            <td class="text-center">
+                                                <span class="badge bg-secondary px-3 py-1">@item.Quantity</span>
+                                            </td>
+                                            <td class="text-end fw-bold text-success">@item.LineTotal.ToString("C")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr class="table-light">
+                                        <td colspan="3" class="text-end fw-bold fs-5">Order Total</td>
+                                        <td class="text-end fw-bold fs-5 text-success">@Model.Total.ToString("C")</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shipping + Payment Info -->
+                <div class="row gx-4 mb-4">
+                    <div class="col-md-6 mb-4 mb-md-0">
+                        <div class="card shadow-lg border-0 rounded h-100">
+                            <div class="card-body p-4">
+                                <h6 class="fw-bold text-dark mb-3">
+                                    <i class="bi bi-geo-alt me-2"></i>Shipping To
+                                </h6>
+                                <p class="mb-1 fw-semibold">@Model.FirstName @Model.LastName</p>
+                                <p class="mb-1 text-muted small">@Model.AddressLine</p>
+                                <p class="mb-1 text-muted small">@Model.City, @Model.PostalCode</p>
+                                <p class="mb-1 text-muted small">@Model.Country</p>
+                                <p class="mb-0 text-muted small">@Model.Phone</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card shadow-lg border-0 rounded h-100">
+                            <div class="card-body p-4">
+                                <h6 class="fw-bold text-dark mb-3">
+                                    <i class="bi bi-credit-card me-2"></i>Payment
+                                </h6>
+                                <p class="mb-1 fw-semibold">@Model.PaymentMethod</p>
+                                <p class="mb-0 text-muted small">Estimated delivery: 5–7 business days</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <a asp-controller="Products" asp-action="Index" class="btn btn-primary btn-lg px-5">
+                        <i class="bi bi-bag me-2"></i>Continue Shopping
+                    </a>
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary btn-lg px-5">
+                        <i class="bi bi-house me-2"></i>Back to Home
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
